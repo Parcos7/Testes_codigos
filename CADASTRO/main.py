@@ -108,6 +108,6 @@ try:
                     for i in range(len(pessoa)):
                         dadosC.write('Dados da %s pessoa:\n' % ([i+1]))
                         dadosC.write('%s: %s\n\n' % (pessoa[i]))
-except SyntaxWarning:
-    print("Peguei o SyntaxWarning como erro!")
+except:
+    print("Erro tente novamente!")
 
