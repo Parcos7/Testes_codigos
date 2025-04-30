@@ -54,7 +54,7 @@ def cadastrar( x):
         case 'login':
             login = input("Digite o usuario: ")
             senha = input("Digite a senha: ")
-            query = ("SELECT usuario, senha FROM Usuarios WHERE usuario = '%s' AND senha = '%s'" % (login, senha))
+            cursor.execute("SELECT usuario, senha FROM Usuarios WHERE usuario = '%s' AND senha = '%s'" % (login, senha))
             resultado = cursor.fetchall()
             if resultado:
                 print("Seja bem-vindo!!!")
@@ -103,9 +103,13 @@ try:
                 dadosC = open('Dados.txt', 'w')
                 dadosC.write(' ' * 20 + 'Dados incluso dos Usuarios\n\n')
                 cursor.execute("SELECT * FROM Usuarios")
-                for pessoa in cursor.fetchall():
+                resultados = cursor.fetchall()
+                for pessoa in resultados:
+                    dadosC.write('Dados da %s° pessoa:\n\n' % (pessoa[0]))
                     for i in range(len(pessoa)):
-                        dadosC.write('Dados da %s pessoa:\n' % ([i+1]))
-                        dadosC.write('%s: %s\n\n' % (pessoa[i]))
+                        dadosC.write('Nome: %s\n\n' % (pessoa[i+1]))
+                        dadosC.write('Usuario: %s\n\n' % (pessoa[i+3]))
+                        dadosC.write('Senha: %s\n\n' % (pessoa[i+2]))
+                        break
 except:
     print("ERRO!")
