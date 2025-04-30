@@ -1,5 +1,4 @@
 import psycopg2
-import warnings
 
 conn = psycopg2.connect(
     host = 'localhost',
