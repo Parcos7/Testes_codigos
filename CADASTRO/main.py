@@ -1,4 +1,5 @@
 import psycopg2
+import warnings
 
 conn = psycopg2.connect(
     host = 'localhost',
@@ -108,6 +109,5 @@ try:
                         dadosC.write('Dados da %s pessoa:\n' % ([i+1]))
                         dadosC.write('%s: %s\n\n' % (pessoa[i]))
 except SyntaxWarning:
-    print("Erro de sintaxe!")
-except ValueError:
-    print("Erro na atribuição!")
+    print("Peguei o SyntaxWarning como erro!")
+
