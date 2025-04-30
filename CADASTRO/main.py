@@ -52,23 +52,25 @@ def cadastrar( x):
     #até aqui eu mechi 
     match x:    
         case 'login':
-            login = input("Digite o usuario: ")
+            login = input("Digite o usuario ou Email: ")
             senha = input("Digite a senha: ")
-            cursor.execute("SELECT usuario, senha FROM Usuarios WHERE usuario = '%s' AND senha = '%s'" % (login, senha))
+            cursor.execute("SELECT usuario, senha, email FROM Usuarios WHERE usuario = '%s' OR email = '%s' AND senha = '%s'" % (login, login, senha))
             resultado = cursor.fetchall()
             if resultado:
                 print("Seja bem-vindo!!!")
             else:
                 print("Senha ou usuario invalida!!")
+
         case 'Attsenha':
-            login = input("Digite o usuario: ")
+            login = input("Digite o usuario ou Email: ")
             senha = input("Digite a senha: ")
-            cursor.execute("SELECT usuario, senha FROM Usuarios WHERE usuario = '%s' AND senha = '%s'" % (login, senha))
+            cursor.execute("SELECT usuario, senha, email FROM Usuarios WHERE usuario = '%s' OR email = '%s' AND senha = '%s'" % (login, login, senha))
             resultado = cursor.fetchall()
             if resultado:
                 Newsenha = input("Digite a nova senha: ")
                 if validando(Newsenha):             
-                    cursor.execute("UPDATE Usuarios SET senha = '%s' WHERE usuario = '%s'" % (Newsenha, login))
+                    cursor.execute("UPDATE Usuarios SET senha = '%s' WHERE usuario = '%s' OR email = '%s'" % (Newsenha, login, login))
+                    print("Nova senha cadastrada!!\n\n")
                 else:
                     print("Senha invalida! precisa de 1 letra maiuscula, caractere especial, não pode conter numeros sequencias")    
         case 'Cadastro':
@@ -77,8 +79,10 @@ def cadastrar( x):
             nome += entNome[1:]
             id = input("insira seu Usuario: ")
             senha = input("Insira sua senha: ")
+            email = input("Insira o email: ")
             if validando(senha):
-                validarUser(nome, id, senha)
+                validarUser(nome, id, senha, email)
+                print("CADASTRO REALIZADO COM SUCESSO!!\n\n")
             else:
                 print("Senha invalida! precisa de 1 letra maiuscula, caractere especial, não pode conter numeros sequencias")
             
@@ -106,10 +110,7 @@ try:
                 resultados = cursor.fetchall()
                 for pessoa in resultados:
                     dadosC.write('Dados da %s° pessoa:\n\n' % (pessoa[0]))
-                    for i in range(len(pessoa)):
-                        dadosC.write('Nome: %s\n\n' % (pessoa[i+1]))
-                        dadosC.write('Usuario: %s\n\n' % (pessoa[i+3]))
-                        dadosC.write('Senha: %s\n\n' % (pessoa[i+2]))
-                        break
+                    dadosC.write('Nome: %s\n\nUsuario: %s\n\nSenha: %s\n\nE-mail: %s\n\n' % (pessoa[1], pessoa[2], pessoa[3], pessoa[4]))
+                print("Arquivo TXT salvo com sucesso! ")
 except:
     print("ERRO!")
